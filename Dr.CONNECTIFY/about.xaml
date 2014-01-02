@@ -1,0 +1,30 @@
+﻿<Window x:Class="My_Connectify.about"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="about me" Height="285" Width="391" ResizeMode="NoResize" FlowDirection="LeftToRight" WindowStartupLocation="CenterScreen" Icon="Images/about.png">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Image Margin="129,10,128,0" Height="128" VerticalAlignment="Top" Source="Images/icon_128.png"/>
+        <TextBlock Text="Dr.Mohammad@outlook.com " Margin="87,0,0,43" VerticalAlignment="Bottom" FontSize="14" FontFamily="Segoe Print" Foreground="RoyalBlue" HorizontalAlignment="Left"/>
+        <TextBlock Text="Dr.CONNECTIFY" Margin="140,135,0,0" VerticalAlignment="Top" FontSize="14" HorizontalAlignment="Left">
+            <TextBlock.Foreground>
+                <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                    <GradientStop Color="#FFA3BB53" Offset="1"/>
+                    <GradientStop Color="#FFFF1700"/>
+                </LinearGradientBrush>
+            </TextBlock.Foreground>
+        </TextBlock>
+        <Image HorizontalAlignment="Left" Margin="15,0,0,20" VerticalAlignment="Bottom" Source="Images/xbill.png" FlowDirection="LeftToRight" Stretch="None"/>
+        <Button x:Name="Closes" Content="Close" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="90" Background="{x:Null}" Height="25" Click="Close_Click" IsCancel="True" IsDefault="True"/>
+        <TextBlock Text="Version 1.0.0" Margin="148,158,0,0" VerticalAlignment="Top" FontSize="14" HorizontalAlignment="Left">
+            <TextBlock.Foreground>
+                <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                    <GradientStop Color="#FF6BBB53" Offset="1"/>
+                    <GradientStop Color="#FF00FF68"/>
+                </LinearGradientBrush>
+            </TextBlock.Foreground>
+        </TextBlock>
+    </Grid>
+</Window>

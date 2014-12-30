@@ -130,77 +130,56 @@ namespace Dr_Connectify
 
         void CheckDrivers()
         {
-            BackgroundWorker bw = new BackgroundWorker();
-            bw.WorkerReportsProgress = true;
-            bw.ProgressChanged += (object sender, ProgressChangedEventArgs e) =>
+            try
             {
-                switch (e.ProgressPercentage)
+                Process process = new Process();
+                ProcessStartInfo psi = new ProcessStartInfo("cmd.exe");
+                psi.Verb = "runas";
+                psi.RedirectStandardOutput = true;
+                psi.RedirectStandardInput = true;
+                psi.UseShellExecute = false;
+                psi.CreateNoWindow = true;
+                process.StartInfo = psi;
+                process.Start();
+                process.StandardInput.WriteLine("netsh wlan show hostednetwork");
+                process.StandardInput.WriteLine("exit");
+                while (!process.StandardOutput.EndOfStream)
                 {
-                    case 0:
-                        Start_Animation(0, 1, 4000000, e.UserState.ToString(), color.Stroke, true);
-                        break;
-                    case 1:
-                        NetworkStarted = (bool)e.UserState;
-                        break;
-                    case 2:
-                        CanContinue = (bool)e.UserState;
-                        break;
-                }
-            };
-            bw.DoWork += (object sender, DoWorkEventArgs e) =>
-            {
-                try
-                {
-                    Process process = new Process();
-                    ProcessStartInfo psi = new ProcessStartInfo("cmd.exe");
-                    psi.Verb = "runas";
-                    psi.RedirectStandardOutput = true;
-                    psi.RedirectStandardInput = true;
-                    psi.UseShellExecute = false;
-                    psi.CreateNoWindow = true;
-                    process.StartInfo = psi;
-                    process.Start();
-                    process.StandardInput.WriteLine("netsh wlan show hostednetwork");
-                    process.StandardInput.WriteLine("exit");
-                    while (!process.StandardOutput.EndOfStream)
+                    string x = process.StandardOutput.ReadLine();
+                    if (x.Length > 9 && x.Substring(0, 10).ToLower().Contains("status"))
                     {
-                        string x = process.StandardOutput.ReadLine();
-                        if (x.Length > 9 && x.Substring(0, 10).ToLower().Contains("status"))
-                        {
-                            if (x.ToLower().Contains(": started"))
-                                bw.ReportProgress(1, true);
-                            break;
-                        }
+                        if (x.ToLower().Contains("started"))
+                            NetworkStarted = true;
+                        break;
                     }
-                    process.Start();
-                    process.StandardInput.WriteLine("netsh wlan show drivers");
-                    process.StandardInput.WriteLine("exit");
-                    while (!process.StandardOutput.EndOfStream)
+                }
+                process.Start();
+                process.StandardInput.WriteLine("netsh wlan show drivers");
+                process.StandardInput.WriteLine("exit");
+                while (!process.StandardOutput.EndOfStream)
+                {
+                    string x = process.StandardOutput.ReadLine();
+                    if (x.ToLower().Contains("there is no wireless interface on the system"))
                     {
-                        string x = process.StandardOutput.ReadLine();
-                        if (x.ToLower().Contains("there is no wireless interface on the system"))
+                        Start_Animation(0, 1, 4000000, "There is no wireless device on this system.", color.Stroke, true);
+                        CanContinue = false;
+                        return;
+                    }
+                    if (x.ToLower().Contains("hosted network supported"))
+                        if (x.ToLower().Contains("yes"))
                         {
-                            bw.ReportProgress(0, "There is no wireless device on this system.");
-                            bw.ReportProgress(2, false);
+                            CanContinue = true;
                             return;
                         }
-                        if (x.ToLower().Contains("hosted network supported"))
-                            if (x.ToLower().Contains("yes"))
-                            {
-                                bw.ReportProgress(2, true);
-                                return;
-                            }
-                    }
-                    bw.ReportProgress(0, "The wireless device isn't support hosted network.");
-                    bw.ReportProgress(2, false);
                 }
-                catch (Exception ex)
-                {
-                    bw.ReportProgress(2, false);
-                    bw.ReportProgress(0, ex.Message);
-                }
-            };
-            bw.RunWorkerAsync();
+                Start_Animation(0, 1, 4000000, "The wireless device isn't support hosted network.", color.Stroke, true);
+                CanContinue = false;
+            }
+            catch (Exception ex)
+            {
+                can_continue = false;
+                Start_Animation(0, 1, 4000000, ex.Message, color.Stroke, true);
+            }
         }
 
         void Add_Click(object sender, RoutedEventArgs e)
@@ -213,14 +192,11 @@ namespace Dr_Connectify
                 if (auto_inc)
                     name.Text = Properties.Settings.Default.network_name + (Properties.Settings.Default.count + 1);
                 pass = password.Visibility == Visibility.Visible ? password.Password : password_shadow.Text;
-                if (name.Text == string.Empty || password.Password == string.Empty)
-                    Start_Animation(0, 1, 4000000, "Write network name and password then try again.", color.Stroke, true);
-                else if (pass.Length < 8)
-                    Start_Animation(0, 1, 4000000, "Password length must be more than 7 characters.", color.Stroke, true);
-                else if (pass.Length > 64)
-                    Start_Animation(0, 1, 4000000, "Password length must be less than 64 characters.", color.Stroke, true);
-                else if (ContainNotASCII(pass))
-                    Start_Animation(0, 1, 4000000, "Password cannot contains a nonASCII characters.", color.Stroke, true);
+                if (name.Text == string.Empty || password.Password == string.Empty) ShuckWindow("Write network name and password then try again.");
+                else if (pass.Length < 8) ShuckWindow("Password length must be more than 7 characters.");
+                else if (pass.Length > 64) ShuckWindow("Password length must be less than 64 characters.");
+                else if (ContainNotASCII(pass)) ShuckWindow("Password cannot contains a nonASCII characters.");
+                else
                 {
                     try
                     {
@@ -252,13 +228,13 @@ namespace Dr_Connectify
                                 if (!process.StandardOutput.EndOfStream)
                                 {
                                     string y = process.StandardOutput.ReadLine();
-                                    Start_Animation(0, 1, 4000000, y, color.Stroke, true);
+                                    ShuckWindow(y);
                                 }
                                 break;
                             }
                             if (x.ToLower().Contains("you must run this command from a command prompt with administrator privilege"))
                             {
-                                Start_Animation(0, 1, 4000000, "you must run this app as adminstrator.", color.Stroke, true);
+                                ShuckWindow("you must run this app as adminstrator.");
                                 break;
                             }
                         }
@@ -267,8 +243,8 @@ namespace Dr_Connectify
                 }
             }
             else
-                Start_Animation(0, 1, 4000000, "The hosted network couldn't be started.", color.Stroke, true);
-        }
+                ShuckWindow("The hosted network couldn't be started."); 
+            }
 
         private string GenerateNewPassword()
         {
@@ -332,19 +308,18 @@ namespace Dr_Connectify
                             if (!process.StandardOutput.EndOfStream)
                             {
                                 string y = process.StandardOutput.ReadLine();
-                                Start_Animation(0, 1, 4000000, y, color.Stroke, true);
+                                ShuckWindow(y);
                             }
                         }
                         if (x.ToLower().Contains("you must run this command from a command prompt with administrator privilege"))
                         {
-                            Start_Animation(0, 1, 4000000, "you must run this app as adminstrator.", color.Stroke, true);
+                            ShuckWindow("you must run this app as adminstrator.");
                             break;
                         }
                     }
 
                 }
-                catch (Exception ex)
-                { Start_Animation(0, 1, 4000000, ex.Message, color.Stroke, true); }
+                catch (Exception ex) { ShuckWindow(ex.Message); }
             }
         }
 
@@ -417,7 +392,6 @@ namespace Dr_Connectify
 
 
         #region Main Menu Apperance
-        bool top_begain = true;
         private void FirstGrid_MouseEnter(object sender, MouseEventArgs e)
         {
             if (main_menu.Margin.Left < -60)
@@ -425,8 +399,6 @@ namespace Dr_Connectify
                 ThicknessAnimation animation = new ThicknessAnimation(new Thickness(0, 0, 0, 0), new Duration(new TimeSpan(1500000)));
                 main_menu.BeginAnimation(MarginProperty, animation);
                 BackgroundWorker bw = new BackgroundWorker();
-                double j = Mouse.GetPosition(null).Y;
-                top_begain = j < 175;
                 bw.DoWork += ShowMenu_DoWork;
                 bw.ProgressChanged += ShowMenu_ProgressChanged;
                 bw.WorkerReportsProgress = true;
@@ -436,10 +408,10 @@ namespace Dr_Connectify
 
         void ShowMenu_DoWork(object sender, DoWorkEventArgs e)
         {
-            int i = top_begain ? 0 : 3;
-            while (top_begain ? i < 4 : i > -1)
+            int i = 0;
+            while (i < 4)
             {
-                ((BackgroundWorker)sender).ReportProgress(top_begain ? i++ : i--);
+                ((BackgroundWorker)sender).ReportProgress(i++);
                 Thread.Sleep(80);
             }
         }
@@ -466,22 +438,19 @@ namespace Dr_Connectify
 
         void HideMenu_DoWork(object sender, DoWorkEventArgs e)
         {
-            int i = top_begain ? 3 : 0;
+            int i = 4;
             Thread.Sleep(200);
-            while (top_begain ? i > -1 : i < 4)
+            while (i > 0)
             {
-                ((BackgroundWorker)sender).ReportProgress(top_begain ? i-- : i++);
+                ((BackgroundWorker)sender).ReportProgress(--i);
                 Thread.Sleep(55);
             }
         }
 
         void HideMenu_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            if (e.ProgressPercentage < 4 && e.ProgressPercentage > -1)
-            {
-                ThicknessAnimation animation = new ThicknessAnimation(new Thickness(-128, ((Button)main_menu_stack.Children[e.ProgressPercentage]).Margin.Top, 0, 0), new Duration(new TimeSpan(750000)));
-                main_menu_stack.Children[e.ProgressPercentage].BeginAnimation(Button.MarginProperty, animation);
-            }
+            ThicknessAnimation animation = new ThicknessAnimation(new Thickness(-128, ((Button)main_menu_stack.Children[e.ProgressPercentage]).Margin.Top, 0, 0), new Duration(new TimeSpan(750000)));
+            main_menu_stack.Children[e.ProgressPercentage].BeginAnimation(Button.MarginProperty, animation);
         }
 
         void HideMenu_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -714,5 +683,80 @@ namespace Dr_Connectify
         {
             glind_image.Opacity = (9 - glind_mother.Children.IndexOf((Grid)sender)) * 0.11;
         }
+
+
+        #region Shuck Window Functions
+        double old_left;
+        string message;
+        public void ShuckWindow(string msg)
+        {
+            old_left = Left;
+            message = msg;
+            DoubleAnimation animation = new DoubleAnimation(Left, Left + 10, new Duration(new TimeSpan(0, 0, 0, 0, 20)));
+            BeginAnimation(LeftProperty, animation);
+            BackgroundWorker bw = new BackgroundWorker();
+            bw.WorkerReportsProgress = true;
+            bw.DoWork += Shuck_DoWork;
+            bw.ProgressChanged += Shuck_ProgressChanged;
+            bw.RunWorkerAsync();
+        }
+
+        void Shuck_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            DoubleAnimation animation = new DoubleAnimation(Left, Left - 20, new Duration(new TimeSpan(0, 0, 0, 0, 20)));
+            BeginAnimation(LeftProperty, animation);
+            BackgroundWorker bw = new BackgroundWorker();
+            bw.WorkerReportsProgress = true;
+            bw.DoWork += Shuck_DoWork;
+            bw.ProgressChanged += bw_ProgressChanged2;
+            bw.RunWorkerAsync();
+        }
+
+        void bw_ProgressChanged2(object sender, ProgressChangedEventArgs e)
+        {
+            DoubleAnimation animation = new DoubleAnimation(Left, Left + 20, new Duration(new TimeSpan(0, 0, 0, 0, 20)));
+            BeginAnimation(LeftProperty, animation);
+            BackgroundWorker bw = new BackgroundWorker();
+            bw.WorkerReportsProgress = true;
+            bw.DoWork += Shuck_DoWork;
+            bw.ProgressChanged += bw_ProgressChanged3;
+            bw.RunWorkerAsync();
+        }
+
+        void bw_ProgressChanged3(object sender, ProgressChangedEventArgs e)
+        {
+            DoubleAnimation animation = new DoubleAnimation(Left, Left - 20, new Duration(new TimeSpan(0, 0, 0, 0, 20)));
+            BeginAnimation(LeftProperty, animation);
+            BackgroundWorker bw = new BackgroundWorker();
+            bw.WorkerReportsProgress = true;
+            bw.DoWork += Shuck_DoWork;
+            bw.ProgressChanged += bw_ProgressChanged4;
+            bw.RunWorkerAsync();
+        }
+
+        void bw_ProgressChanged4(object sender, ProgressChangedEventArgs e)
+        {
+            DoubleAnimation animation = new DoubleAnimation(Left, Left + 10, new Duration(new TimeSpan(0, 0, 0, 0, 20)));
+            BeginAnimation(LeftProperty, animation);
+            BackgroundWorker bw = new BackgroundWorker();
+            bw.WorkerReportsProgress = true;
+            bw.DoWork += Shuck_DoWork;
+            bw.ProgressChanged += Shuck_ProgressChanged5;
+            bw.RunWorkerAsync();
+        }
+
+        void Shuck_ProgressChanged5(object sender, ProgressChangedEventArgs e)
+        {
+            Left = old_left;
+            Start_Animation(0, 1, 4000000, message, color.Stroke, true);
+        }
+
+        static void Shuck_DoWork(object sender, DoWorkEventArgs e)
+        {
+            Thread.Sleep(50);
+            ((BackgroundWorker)sender).ReportProgress(0);
+        }
+
+        #endregion
     }
 }

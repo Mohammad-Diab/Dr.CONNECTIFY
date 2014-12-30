@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Dr_Connectify"
         mc:Ignorable="d"
-        Title="Options" Height="510" Width="450" Icon="Images/setting.png" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" FontSize="14">
+        Title="Options" Height="450" Width="450" Icon="Images/setting.png" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" FontSize="14">
     <Window.Background>
         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
             <GradientStop Color="SkyBlue" Offset="0"/>
@@ -14,22 +14,19 @@
     </Window.Background>
     <Grid>
         <Button x:Name="button" Content="Save" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="100" FontSize="16" Background="{x:Null}" BorderBrush="#FF8F42A0" Foreground="#FF8F42A0" Click="Save_Click"/>
-        <CheckBox x:Name="checkBox" Content="Automatic increase network name's number." HorizontalAlignment="Left" Margin="10,222,0,0" VerticalAlignment="Top" BorderBrush="#FF2DA82D"/>
-        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="10,161,0,0" TextWrapping="Wrap" Text="Network name's counting number:" VerticalAlignment="Top"/>
-        <TextBox x:Name="name" HorizontalAlignment="Right" Margin="0,135,10,0" Text="Dr.Mohammad" VerticalAlignment="Top" Width="175" MaxLines="1" MaxLength="24" BorderBrush="#FF2DA82D"/>
-        <TextBox x:Name="name_count" HorizontalAlignment="Right" Margin="0,161,10,0" Text="1" VerticalAlignment="Top" Width="175" MaxLines="1" MaxLength="8" BorderBrush="#FF2DA82D"/>
-        <TextBox x:Name="chars" Margin="10,290,10,40" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" BorderBrush="#FF2DA82D" FlowDirection="LeftToRight"/>
-        <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="10,135,0,0" TextWrapping="Wrap" Text="Network name:" VerticalAlignment="Top"/>
-        <TextBlock x:Name="textBlock2" HorizontalAlignment="Left" Margin="10,268,0,0" TextWrapping="Wrap" Text="Use this characters to generate passwords (separated by spaces) :" VerticalAlignment="Top"/>
-        <CheckBox x:Name="checkBox1" Content="Generate new password for new network." HorizontalAlignment="Left" Margin="10,245,0,0" VerticalAlignment="Top" BorderBrush="#FF2DA82D"/>
-        <TextBox x:Name="password_text" HorizontalAlignment="Right" Height="23" Margin="0,187,10,0" Text="Dr.Mohammad" VerticalAlignment="Top" Width="175" MaxLength="63" MaxLines="1" BorderBrush="#FF2DA82D"/>
-        <TextBlock x:Name="textBlock3" HorizontalAlignment="Left" Margin="10,187,0,0" TextWrapping="Wrap" Text="Prime password:" VerticalAlignment="Top"/>
+        <CheckBox x:Name="checkBox" Content="Automatic increase network name's number." HorizontalAlignment="Left" Margin="10,180,0,0" VerticalAlignment="Top" BorderBrush="#FF2DA82D"/>
+        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="10,125,0,0" TextWrapping="Wrap" Text="Network name's counting number:" VerticalAlignment="Top"/>
+        <TextBox x:Name="name" HorizontalAlignment="Right" Margin="0,100,10,0" Text="Dr.Mohammad" VerticalAlignment="Top" Width="175" MaxLines="1" MaxLength="24" BorderBrush="#FF2DA82D"/>
+        <TextBox x:Name="name_count" HorizontalAlignment="Right" Margin="0,125,10,0" Text="1" VerticalAlignment="Top" Width="175" MaxLines="1" MaxLength="8" BorderBrush="#FF2DA82D"/>
+        <TextBox x:Name="chars" Margin="10,259,10,40" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" BorderBrush="#FF2DA82D"/>
+        <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="10,100,0,0" TextWrapping="Wrap" Text="Network name:" VerticalAlignment="Top"/>
+        <TextBlock x:Name="textBlock2" HorizontalAlignment="Left" Margin="10,235,0,0" TextWrapping="Wrap" Text="Use this characters to generate passwords (separated by spaces) :" VerticalAlignment="Top"/>
+        <CheckBox x:Name="checkBox1" Content="Generate new password for new network." HorizontalAlignment="Left" Margin="10,205,0,0" VerticalAlignment="Top" BorderBrush="#FF2DA82D"/>
+        <TextBox x:Name="password_text" HorizontalAlignment="Right" Height="23" Margin="0,150,10,0" Text="Dr.Mohammad" VerticalAlignment="Top" Width="175" MaxLength="63" MaxLines="1" BorderBrush="#FF2DA82D"/>
+        <TextBlock x:Name="textBlock3" HorizontalAlignment="Left" Margin="10,150,0,0" TextWrapping="Wrap" Text="Prime password:" VerticalAlignment="Top"/>
         <TextBlock x:Name="textBlock4" Margin="63,10,0,0" TextWrapping="Wrap" Text="GENERAL SETTING" VerticalAlignment="Top" FontSize="36" Foreground="#FF00554D" HorizontalAlignment="Left"/>
-        <TextBlock x:Name="textBlock5" HorizontalAlignment="Left" Margin="10,63,0,0" TextWrapping="Wrap" Text="Leave field empty for default values." VerticalAlignment="Top" FontSize="17.333" FontWeight="Bold" Foreground="#FF2584A0"/>
+        <TextBlock x:Name="textBlock5" HorizontalAlignment="Left" Margin="10,63,0,0" TextWrapping="Wrap" Text="Leave empty for default values." VerticalAlignment="Top" FontSize="17.333" FontWeight="Bold" Foreground="#FF2584A0"/>
         <Image x:Name="image" HorizontalAlignment="Left" Height="48" Margin="10,10,0,0" VerticalAlignment="Top" Width="48" Source="Images/setting.png"/>
-        <ComboBox x:Name="comboBox" HorizontalAlignment="Right" Margin="0,100,10,0" VerticalAlignment="Top" Width="175" Background="{x:Null}" BorderBrush="#FF2DA82D" Foreground="#FF2DA82D" SelectedIndex="0" ToolTip="Language will be added in next update.">
-            <ComboBoxItem Content="English"/>
-        </ComboBox>
-        <TextBlock x:Name="textBlock6" HorizontalAlignment="Left" Margin="10,100,0,0" TextWrapping="Wrap" Text="Language:" VerticalAlignment="Top"/>
+
     </Grid>
 </Window>

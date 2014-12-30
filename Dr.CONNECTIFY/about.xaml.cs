@@ -16,11 +16,5 @@ namespace Dr_Connectify
         {
             this.Close();
         }
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-
-            //ver.Text = "Version " + Application.Current.Version.ToString(4);
-        }
     }
 }

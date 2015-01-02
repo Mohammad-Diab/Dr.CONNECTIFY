@@ -1,90 +1,22 @@
-﻿<Window x:Class="My_Connectify.MainWindow"
+﻿<Window x:Class="Dr_Connectify.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Dr.CONNECTIFY" Height="320" Width="380" ResizeMode="CanMinimize" Icon="Images/icon_32.png" Loaded="Window_Loaded">
+        Title="Dr.CONNECTIFY" Height="400" Width="380" ResizeMode="CanMinimize" Icon="Images/icon_32.png" Loaded="Window_Loaded" PreviewKeyUp="WindowKeyControll_KeyUp">
+    <Window.Resources>
+        <ControlTemplate x:Name="RoundButtonTemplate" x:Key="roundButtonTemplate" TargetType="{x:Type Button}">
+            <Grid MouseEnter="RoundButton_MouseOver" MouseLeave="RoundButton_MouseLeave" MouseLeftButtonDown="RoundButton_MouseDown" MouseLeftButtonUp="RoundButton_MouseUp">
+                <Ellipse Width="60" Height="60" Fill="{x:Null}" Stroke="WhiteSmoke" StrokeThickness="5"/>
+                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="8"/>
+            </Grid>
+        </ControlTemplate>
+    </Window.Resources>
     <Window.Background>
         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-            <GradientStop Color="LightSkyBlue" Offset="0"/>
+            <GradientStop x:Name="background_color" Color="Tomato" Offset="0"/>
             <GradientStop Color="White" Offset="0.3333333333"/>
         </LinearGradientBrush>
     </Window.Background>
     <Grid>
-        <Button x:Name="go" Height="40" Margin="96,160,96,0" VerticalAlignment="Top" FontSize="20" Click="Add_Click" Background="{x:Null}" Foreground="RoyalBlue">
-            <Button.Content>
-                <Grid Width="178" Height="38">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*"/>
-                            <ColumnDefinition Width="177"/>
-                            <ColumnDefinition Width="1*"/>
-                        </Grid.ColumnDefinitions>
-                        <Image HorizontalAlignment="Left" Source="Images/windows_shell.png" Stretch="None" Grid.Column="1"/>
-                        <TextBlock Text="Go ahead" Margin="50,4,0,0" Height="27" VerticalAlignment="Top" Grid.Column="1" HorizontalAlignment="Left" Width="85"/>
-                    </Grid>
-                </Grid>
-            </Button.Content>
-        </Button>
-        <Button x:Name="stop" Height="40" Margin="96,205,96,0" VerticalAlignment="Top" FontSize="20" Click="Remove_Click" Background="{x:Null}" Foreground="Red">
-            <Button.Content>
-                <Grid Width="178" Height="38">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*"/>
-                            <ColumnDefinition Width="177"/>
-                            <ColumnDefinition Width="1*"/>
-                        </Grid.ColumnDefinitions>
-                        <Image HorizontalAlignment="Left" Source="Images/windows_shell.png" Stretch="None" Grid.Column="1"/>
-                        <TextBlock Text="Stop network" Margin="39,4,0,0" VerticalAlignment="Top" Grid.Column="1" HorizontalAlignment="Left"/>
-                    </Grid>
-                </Grid>
-            </Button.Content>
-        </Button>
-        <PasswordBox x:Name="password" Margin="130,120,60,0" VerticalAlignment="Top" FontSize="19" Password="Dr.Mohammad" Background="{x:Null}" MaxLength="63" PasswordChar="&#xF053;" FontFamily="Wingdings"/>
-        <TextBox x:Name="name" Margin="130,90,60,0" TextWrapping="Wrap" Text="Dr.Mohammad" VerticalAlignment="Top" FontSize="16" Background="{x:Null}" MaxLength="32" MaxLines="1" AutoWordSelection="True"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,119,0,0" TextWrapping="Wrap" Text="Password:" VerticalAlignment="Top" FontSize="16"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,91,0,0" TextWrapping="Wrap" Text="Network name:" VerticalAlignment="Top" FontSize="16"/>
-        <Rectangle x:Name="back" Height="30" VerticalAlignment="Bottom" Opacity="0">
-            <Rectangle.Fill>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <LinearGradientBrush.RelativeTransform>
-                        <TransformGroup>
-                            <ScaleTransform CenterY="0.5" CenterX="0.5"/>
-                            <SkewTransform CenterY="0.5" CenterX="0.5"/>
-                            <RotateTransform Angle="-90" CenterY="0.5" CenterX="0.5"/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </LinearGradientBrush.RelativeTransform>
-                    <GradientStop Color="#FF037F01" Offset="0"/>
-                    <GradientStop Color="#FF106A0E" Offset="1"/>
-                </LinearGradientBrush>
-            </Rectangle.Fill>
-        </Rectangle>
-        <TextBlock x:Name="text" Opacity="0" Margin="10,0,0,5" TextWrapping="Wrap" VerticalAlignment="Bottom" Foreground="White" FontSize="14" HorizontalAlignment="Left"><Run Name="run"/></TextBlock>
-        <Button ToolTip="about" HorizontalAlignment="Right" Height="32" Margin="0,47,10,0" VerticalAlignment="Top" Width="32" Background="{x:Null}" Click="Button_Click" BorderBrush="{x:Null}">
-            <Button.Content>
-                <Image Source="Images/about.png"/>
-            </Button.Content>
-        </Button>
-        <Button ToolTip="Help" HorizontalAlignment="Right" Height="32" Margin="0,10,10,0" VerticalAlignment="Top" Width="32" Background="{x:Null}" Click="Button_Click" BorderBrush="{x:Null}">
-            <Button.Content>
-                <Image Source="Images/help.png"/>
-            </Button.Content>
-        </Button>
-        <Button x:Name="show_password" ToolTip="Show password" HorizontalAlignment="Right" Margin="0,118,20,0" VerticalAlignment="Top" Background="{x:Null}" Click="ShowHide_Click">
-            <Button.Content>
-                <Image Source="Images/eye.png" Stretch="None"/>
-            </Button.Content>
-        </Button>
-        <TextBox x:Name="password_shadow" Margin="130,120,60,0" VerticalAlignment="Top" FontSize="16" Text="Dr.Mohammad" Background="{x:Null}" Visibility="Collapsed" AutoWordSelection="True" MaxLines="1" MaxLength="63"/>
-        <TextBlock HorizontalAlignment="Left" Margin="25,20,0,0" TextWrapping="Wrap" Text="Dr.CONNECTIFY" VerticalAlignment="Top" Foreground="Black" FontSize="36" FontFamily="Tempus Sans ITC" FontWeight="Bold"/>
-        <TextBlock HorizontalAlignment="Left" Margin="27,18,0,0" TextWrapping="Wrap" Text="Dr.CONNECTIFY" VerticalAlignment="Top" FontSize="36" FontFamily="Tempus Sans ITC" FontWeight="Bold">
-            <TextBlock.Foreground>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="RoyalBlue" Offset="0"/>
-                    <GradientStop Color="SkyBlue" Offset="1"/>
-                </LinearGradientBrush>
-            </TextBlock.Foreground>
-        </TextBlock>
         <Rectangle x:Name="color" HorizontalAlignment="Left" Margin="0,0,0,0" Width="0" Height="0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5">
             <Rectangle.RenderTransform>
                 <TransformGroup>
@@ -123,5 +55,127 @@
                 </LinearGradientBrush>
             </Rectangle.Stroke>
         </Rectangle>
+        <Grid x:Name="mother" Margin="380,0,0,0">
+            <Grid Margin="0,0,-375,0" HorizontalAlignment="Left" Width="380">
+                <TextBlock x:Name="state" Margin="100,69,100,0" TextTrimming="CharacterEllipsis" FontSize="30" Text="Deactivated" VerticalAlignment="Top" Foreground="Tomato" TextAlignment="Center"/>
+                <TextBlock HorizontalAlignment="Left" Margin="30,120,0,0" TextWrapping="Wrap" Text="Network name:" VerticalAlignment="Top" FontSize="18"/>
+                <TextBox x:Name="name" Margin="60,150,30,0" TextWrapping="Wrap" Text="Dr.Mohammad" VerticalAlignment="Top" FontSize="18" Background="{x:Null}" MaxLength="32" MaxLines="1" AutoWordSelection="True" BorderBrush="#FF4783D8" TabIndex="0"/>
+                <TextBlock HorizontalAlignment="Left" Margin="30,190,0,0" TextWrapping="Wrap" Text="Password:" VerticalAlignment="Top" FontSize="18"/>
+                <PasswordBox x:Name="password" Margin="60,219,82,0" VerticalAlignment="Top" FontSize="22" Password="Dr.Mohammad" Background="{x:Null}" MaxLength="63" PasswordChar="&#xF053;" FontFamily="Wingdings" BorderBrush="#FF4783D8" TabIndex="1"/>
+                <TextBox x:Name="password_shadow" Margin="60,219,56,0" VerticalAlignment="Top" FontSize="18" Text="Dr.Mohammad" Background="{x:Null}" Visibility="Collapsed" AutoWordSelection="True" MaxLines="1" MaxLength="63" BorderBrush="#FFC500FF"/>
+                <Button x:Name="show_password" ToolTip="Show password" HorizontalAlignment="Right" Margin="0,219,56,0" VerticalAlignment="Top" Background="{x:Null}" Click="ShowHide_Click" BorderBrush="#FF4783D8" TabIndex="5" Foreground="#FF4783D8">
+                    <Button.Content>
+                        <Image Source="Images/eye.png" Stretch="None"/>
+                    </Button.Content>
+                </Button>
+                <Grid x:Name="start_stop_grid" Margin="10,0,10,40" VerticalAlignment="Bottom" Height="50">
+                    <Button x:Name="go" Height="40" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="22" Click="Add_Click" Background="{x:Null}" Foreground="RoyalBlue" Margin="80,5,0,0" Width="190" BorderBrush="RoyalBlue" TabIndex="3">
+                        <Button.Content>
+                            <Grid Width="178" Height="38">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="177"/>
+                                        <ColumnDefinition Width="1*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Image HorizontalAlignment="Left" Source="Images/windows_shell.png" Stretch="None" Grid.Column="1"/>
+                                    <TextBlock Text="Go ahead" Margin="50,4,0,0" Height="27" VerticalAlignment="Top" Grid.Column="1" HorizontalAlignment="Left"/>
+                                </Grid>
+                            </Grid>
+                        </Button.Content>
+                    </Button>
+                    <Button x:Name="stop" Height="40" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="22" Click="Remove_Click" Background="{x:Null}" Foreground="Red" Margin="400,5,0,0" Width="190" BorderBrush="Red" TabIndex="4">
+                        <Button.Content>
+                            <Grid Width="178" Height="38">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="177"/>
+                                        <ColumnDefinition Width="1*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Image HorizontalAlignment="Left" Source="Images/windows_shell.png" Stretch="None" Grid.Column="1"/>
+                                    <TextBlock Text="Stop network" Margin="39,4,0,0" VerticalAlignment="Top" Grid.Column="1" HorizontalAlignment="Left"/>
+                                </Grid>
+                            </Grid>
+                        </Button.Content>
+                    </Button>
+                </Grid>
+                <Button x:Name="goto_clients" ToolTip="Go to clients tap" HorizontalAlignment="Right" Height="52" Margin="0,0,20,20" VerticalAlignment="Bottom" Width="52" Background="{x:Null}" Click="ClientTap_Click" BorderBrush="{x:Null}" Visibility="Hidden">
+                    <Button.Content>
+                        <Image Source="Images/arrow-right.png" Width="48" Height="48"/>
+                    </Button.Content>
+                </Button>
+                <Button x:Name="button" Content="Check state" HorizontalAlignment="Right" Margin="0,86,20,0" VerticalAlignment="Top" Width="75" Background="{x:Null}" BorderBrush="#FF4783D8" Foreground="#FF4783D8" Click="Check_Click" TabIndex="6"/>
+                <Button x:Name="button1" ToolTip="Generate random password" HorizontalAlignment="Right" Margin="0,219,30,0" VerticalAlignment="Top" Width="27" BorderBrush="#FF4783D8" Background="{x:Null}" Foreground="#FF4783D8" Height="26" Click="GeneratePassword_Click" TabIndex="7">
+                    <Button.Content>
+                        <Image Source="Images/password.png" Stretch="UniformToFill" Width="22" Height="22"/>
+                    </Button.Content>
+                </Button>
+            </Grid>
+            <Grid Margin="380,0,0,0" Width="380" HorizontalAlignment="Left">
+                <TextBlock x:Name="state2" HorizontalAlignment="Right" Margin="0,60,20,0" TextWrapping="Wrap" Text="Deactive" VerticalAlignment="Top" FontSize="18" Foreground="Red"/>
+                <TextBlock HorizontalAlignment="Left" Margin="20,80,0,0" TextWrapping="Wrap" Text="Clients:" VerticalAlignment="Top" FontSize="20"/>
+                <ListView x:Name="client_list" FontSize="18" Margin="60,112,30,41" Background="{x:Null}"/>
+                <TextBlock x:Name="total_clients" Margin="60,0,0,14" TextWrapping="Wrap" Text="Total Clients = 0" VerticalAlignment="Bottom" FontSize="16" HorizontalAlignment="Left"/>
+                <CheckBox x:Name="checkBox" Content="Auto Refresh" HorizontalAlignment="Right" Margin="0,89,30,0" VerticalAlignment="Top" FontSize="14" Checked="RefreshClientsList_Checked" IsChecked="True" Unchecked="RefreshClientsList_Unchecked" TabIndex="12" BorderBrush="#FF4783D8" Foreground="#FF4783D8"/>
+            </Grid>
+            <Grid Margin="-380,0,0,0" Width="380" HorizontalAlignment="Left">
+                <TextBlock x:Name="hi" Text="Don't forget to enable internet sharing after creating network." Margin="20,125,20,33" FontFamily="Segoe Print" FontSize="29.333" TextAlignment="Center" TextWrapping="Wrap" Foreground="Ivory" Background="White"/>
+            </Grid>
+        </Grid>
+        <TextBlock HorizontalAlignment="Left" Margin="27,17,0,0" TextWrapping="Wrap" Text="Dr.CONNECTIFY 2" VerticalAlignment="Top" Foreground="Black" FontSize="36" FontFamily="Tempus Sans ITC" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="30,18,0,0" TextWrapping="Wrap" Text="Dr.CONNECTIFY 2" VerticalAlignment="Top" FontSize="36" FontFamily="Tempus Sans ITC" FontWeight="Bold">
+            <TextBlock.Foreground>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="LightGreen" Offset="0"/>
+                    <GradientStop Color="White" Offset="1"/>
+                </LinearGradientBrush>
+            </TextBlock.Foreground>
+        </TextBlock>
+        <Image x:Name="glind_image" Width="58" HorizontalAlignment="Left" Source="Images/glind.png" Opacity="0"/>
+                <Rectangle x:Name="back" Height="30" VerticalAlignment="Bottom" Opacity="0">
+            <Rectangle.Fill>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <LinearGradientBrush.RelativeTransform>
+                        <TransformGroup>
+                            <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                            <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                            <RotateTransform Angle="-90" CenterY="0.5" CenterX="0.5"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </LinearGradientBrush.RelativeTransform>
+                    <GradientStop Color="#FF037F01" Offset="0"/>
+                    <GradientStop Color="#FF106A0E" Offset="1"/>
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+        <Grid x:Name="glind_mother" HorizontalAlignment="Left" Width="58" MouseLeave="Grid_MouseLeave" Background="White" Opacity="0">
+            <Grid HorizontalAlignment="Left" Width="10" Margin="0,0,0,0" MouseEnter="FirstGrid_MouseEnter" Background="White" Opacity="0"/>
+            <Grid HorizontalAlignment="Left" Width="6" Margin="10,0,0,0" MouseEnter="GlintGrid_MouceEnter" Background="White" Opacity="0"/>
+            <Grid HorizontalAlignment="Left" Width="6" Margin="16,0,0,0" MouseEnter="GlintGrid_MouceEnter" Background="White" Opacity="0"/>
+            <Grid HorizontalAlignment="Left" Width="6" Margin="22,0,0,0" MouseEnter="GlintGrid_MouceEnter" Background="White" Opacity="0"/>
+            <Grid HorizontalAlignment="Left" Width="6" Margin="28,0,0,0" MouseEnter="GlintGrid_MouceEnter" Background="White" Opacity="0"/>
+            <Grid HorizontalAlignment="Left" Width="6" Margin="34,0,0,0" MouseEnter="GlintGrid_MouceEnter" Background="White" Opacity="0"/>
+            <Grid HorizontalAlignment="Left" Width="6" Margin="40,0,0,0" MouseEnter="GlintGrid_MouceEnter" Background="White" Opacity="0"/>
+            <Grid HorizontalAlignment="Left" Width="6" Margin="46,0,0,0" MouseEnter="GlintGrid_MouceEnter" Background="White" Opacity="0"/>
+            <Grid HorizontalAlignment="Left" Width="6" Margin="52,0,0,0" MouseEnter="GlintGrid_MouceEnter" Background="White" Opacity="0"/>
+        </Grid>
+        <Grid x:Name="main_menu" Width="64" HorizontalAlignment="Left" Background="#FF000000" Margin="-64,0,0,0" MouseLeave="MainMenu_MouseLeave">
+            <StackPanel x:Name="main_menu_stack" Margin="0,55,0,0">
+                <Button x:Name="network_button" Height="64" VerticalAlignment="Top" Margin="-64,0,64,0" Background="#FF333333" Template="{StaticResource roundButtonTemplate}" ToolTip="Show network state" Click="NetworkTap_Click" TabIndex="8">
+                    <Image Source="Images/network.png"/>
+                </Button>
+                <Button x:Name="Client_button" Height="64" VerticalAlignment="Top" Margin="-64,0,64,0" Background="{x:Null}" Template="{StaticResource roundButtonTemplate}" ToolTip="Show clients" Click="ClientTap_Click" TabIndex="9">
+                    <Image Source="Images/client.png"/>
+                </Button>
+                <Button x:Name="Setting_button" Height="64" VerticalAlignment="Top" Margin="-64,0,64,0" Background="{x:Null}" Template="{StaticResource roundButtonTemplate}" ToolTip="Options" Click="Options_Click" TabIndex="10">
+                    <Image Source="Images/setting.png"/>
+                </Button>
+                <Button x:Name="about_button" Height="64" VerticalAlignment="Top" Margin="-64,0,64,0" Background="{x:Null}" Template="{StaticResource roundButtonTemplate}" ToolTip="about" Click="About_Click" TabIndex="11">
+                    <Image Source="Images/about.png"/>
+                </Button>
+            </StackPanel>
+        </Grid>
+        <TextBlock x:Name="text" Opacity="0" Margin="10,0,0,5" TextTrimming="CharacterEllipsis" VerticalAlignment="Bottom" Foreground="White" FontSize="14" HorizontalAlignment="Left"><Run Name="run"/></TextBlock>
     </Grid>
 </Window>

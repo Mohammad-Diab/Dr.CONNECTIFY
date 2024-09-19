@@ -56,7 +56,7 @@ namespace Dr_Connectify
                     total_clients.Text = "Total Clients = 0";
                     client_list.Items.Clear();
                 }
-                start_stop_grid.IsEnabled = value;
+                // start_stop_grid.IsEnabled = value;
             }
         }
 
@@ -114,8 +114,8 @@ namespace Dr_Connectify
         {
             int hint = new Random((int)DateTime.Now.Ticks).Next(hints.Length);
             int color = new Random((int)DateTime.Now.Ticks).Next(brushes.Length);
-            hi.Foreground = brushes[color];
-            hi.Text = hints[hint];
+            // hi.Foreground = brushes[color];
+            // hi.Text = hints[hint];
         }
 
         private void Bw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -394,10 +394,10 @@ namespace Dr_Connectify
         #region Main Menu Apperance
         private void FirstGrid_MouseEnter(object sender, MouseEventArgs e)
         {
-            if (main_menu.Margin.Left < -60)
+            // if (main_menu.Margin.Left < -60)
             {
                 ThicknessAnimation animation = new ThicknessAnimation(new Thickness(0, 0, 0, 0), new Duration(new TimeSpan(1500000)));
-                main_menu.BeginAnimation(MarginProperty, animation);
+                // main_menu.BeginAnimation(MarginProperty, animation);
                 BackgroundWorker bw = new BackgroundWorker();
                 bw.DoWork += ShowMenu_DoWork;
                 bw.ProgressChanged += ShowMenu_ProgressChanged;
@@ -418,14 +418,14 @@ namespace Dr_Connectify
 
         void ShowMenu_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            ((Button)main_menu_stack.Children[e.ProgressPercentage]).Background = null;
-            ThicknessAnimation animation = new ThicknessAnimation(new Thickness(0, ((Button)main_menu_stack.Children[e.ProgressPercentage]).Margin.Top, 0, 0), new Duration(new TimeSpan(750000)));
-            main_menu_stack.Children[e.ProgressPercentage].BeginAnimation(Button.MarginProperty, animation);
+            // ((Button)main_menu_stack.Children[e.ProgressPercentage]).Background = null;
+            // ThicknessAnimation animation = new ThicknessAnimation(new Thickness(0, ((Button)main_menu_stack.Children[e.ProgressPercentage]).Margin.Top, 0, 0), new Duration(new TimeSpan(750000)));
+            // main_menu_stack.Children[e.ProgressPercentage].BeginAnimation(Button.MarginProperty, animation);
         }
 
         void MainMenu_MouseLeave(object sender, MouseEventArgs e)
         {
-            if (main_menu.Margin.Left > -4)
+            // if (main_menu.Margin.Left > -4)
             {
                 BackgroundWorker bw = new BackgroundWorker();
                 bw.DoWork += HideMenu_DoWork;
@@ -449,14 +449,14 @@ namespace Dr_Connectify
 
         void HideMenu_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            ThicknessAnimation animation = new ThicknessAnimation(new Thickness(-128, ((Button)main_menu_stack.Children[e.ProgressPercentage]).Margin.Top, 0, 0), new Duration(new TimeSpan(750000)));
-            main_menu_stack.Children[e.ProgressPercentage].BeginAnimation(Button.MarginProperty, animation);
+            // ThicknessAnimation animation = new ThicknessAnimation(new Thickness(-128, ((Button)main_menu_stack.Children[e.ProgressPercentage]).Margin.Top, 0, 0), new Duration(new TimeSpan(750000)));
+            // main_menu_stack.Children[e.ProgressPercentage].BeginAnimation(Button.MarginProperty, animation);
         }
 
         void HideMenu_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            ThicknessAnimation animation = new ThicknessAnimation(new Thickness(-64, 0, 0, 0), new Duration(new TimeSpan(750000)));
-            main_menu.BeginAnimation(Grid.MarginProperty, animation);
+            // ThicknessAnimation animation = new ThicknessAnimation(new Thickness(-64, 0, 0, 0), new Duration(new TimeSpan(750000)));
+            // main_menu.BeginAnimation(Grid.MarginProperty, animation);
         }
 
         void RoundButton_MouseOver(object sender, MouseEventArgs e)
@@ -676,12 +676,12 @@ namespace Dr_Connectify
 
         private void Grid_MouseLeave(object sender, MouseEventArgs e)
         {
-            glind_image.Opacity = 0;
+            // glind_image.Opacity = 0;
         }
 
         private void GlintGrid_MouceEnter(object sender, MouseEventArgs e)
         {
-            glind_image.Opacity = (9 - glind_mother.Children.IndexOf((Grid)sender)) * 0.11;
+            // glind_image.Opacity = (9 - glind_mother.Children.IndexOf((Grid)sender)) * 0.11;
         }
 
 

@@ -8,7 +8,7 @@
         </Grid.ColumnDefinitions>
         <Image Margin="129,10,128,0" Height="128" VerticalAlignment="Top" Source="Images/icon_128.png"/>
         <TextBlock Text="Dr.Mohammad@outlook.com " Margin="87,0,0,43" VerticalAlignment="Bottom" FontSize="14" FontFamily="Segoe Print" Foreground="RoyalBlue" HorizontalAlignment="Left"/>
-        <TextBlock Text="Dr.CONNECTIFY" Margin="137,136,0,0" VerticalAlignment="Top" FontSize="14" HorizontalAlignment="Left">
+        <TextBlock Text="Dr.CONNECTIFY (APPS PREVIEW)" Margin="86,136,0,0" VerticalAlignment="Top" FontSize="14" HorizontalAlignment="Left">
             <TextBlock.Foreground>
                 <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
                     <GradientStop Color="#FFA3BB53" Offset="1"/>
@@ -18,7 +18,7 @@
         </TextBlock>
         <Image HorizontalAlignment="Left" Margin="15,0,0,20" VerticalAlignment="Bottom" Source="Images/xbill.png" FlowDirection="LeftToRight" Stretch="Fill" Height="77" Width="55"/>
         <Button x:Name="Closes" Content="Close" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="90" Background="{x:Null}" Height="25" Click="Close_Click" IsCancel="True" IsDefault="True" BorderBrush="#FF11786A" Foreground="#FF11786A"/>
-        <TextBlock Text="Version 2.0.4.171" Margin="136,158,0,0" VerticalAlignment="Top" FontSize="14" HorizontalAlignment="Left">
+        <TextBlock Text="Version 3.0.0.377" Margin="136,158,0,0" VerticalAlignment="Top" FontSize="14" HorizontalAlignment="Left">
             <TextBlock.Foreground>
                 <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
                     <GradientStop Color="#FF6BBB53" Offset="1"/>
